@@ -10,8 +10,8 @@ CC := gcc
 CXX:= g++
 
 # compile flags
-CFLAGS :=
-CXXFLAGS := 
+CFLAGS := -g
+CXXFLAGS := -g
 OBJCFLAGS := $(CFLAGS) -c
 OBJCXXFLAGS := $(CXXFLAGS) -c
 

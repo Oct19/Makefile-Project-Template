@@ -1,22 +1,8 @@
-# Makefile-Project-Template
+# Makefile for MEDIUM Project
 
-C/C++ Makefile project in VS Code
+## Language
 
----
-
-## How to use
-
-VS code config files are not required and will not affect this method(lanuch.json or tasks.json)
-
-To enable debug, in config/make.global: add `-g` to CFLAGS and CXXFLAGS
-
-Use `C/C++ Makefile Project` extension to build, run, and debug, VS code default debug is not working.
-
----
-
-# Original README: Makefile for MEDIUM Project
-
-<https://github.com/TheNetAdmin/Makefile-Templates>
+[English](../Readme.md) | [简体中文](./Doc/Readme-cn.md)
 
 ## Introduction
 
