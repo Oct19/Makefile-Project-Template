@@ -7,28 +7,57 @@
 #include "./plot/pbPlots.h"
 #include "./plot/supportLib.h"
 
-int pbPlot(void);
+int pbPlot(double xs[], double ys[], int size);
+float motorPower_PowerSLine(float len, float FStart, float FStop, float flexible, int index);
 
-int main()
+float result = 0.0f;
+float len = 100.0f;
+float FStart = 0.0f;
+float FStop = 10.0f;
+float flexible = 10;
+int index_size = 100;
+
+void main(void)
 {
-    printf("%d\n", f1(1, 2));
-    printf("%d\n", f2(1, 2));
-    printf("%d\n", f3(1, 2));
-    printf("%d\n", f4(1, 2));
-
-    pbPlot();
-    return 0;
+    double speed[index_size];
+    double time[index_size];
+    float timestep = 0.1f;
+    for (int i = 0; i < index_size; i++)
+    {
+        speed[i] = (double)motorPower_PowerSLine(len, FStart, FStop, flexible, i);
+        time[i] = i * timestep;
+        //printf("%f %f\n", time[i], speed[i]);
+    }
+    pbPlot(time, speed, index_size);
+    printf("Run finished\n");
 }
 
-int pbPlot(void)
+float motorPower_PowerSLine(float len, float FStart, float FStop, float flexible, int index)
 {
-    double xs[] = {-2, -1, 0, 1, 2};
-    double ys[] = {2, -1, -2, -1, 2};
+    float deno;
+    float melo;
+    float num;
+    float Fcurrent;
+
+    if (index > len)
+        index = len;
+    num = len / 2;
+    melo = flexible * (index - num) / num;
+    deno = 1.0 / (1 + exp(-melo));
+    Fcurrent = FStart - (FStart - FStop) * deno;
+
+    return Fcurrent;
+}
+
+int pbPlot(double xs[], double ys[], int size)
+{
     _Bool success;
+
+    //int x_size = (sizeof(xs)/sizeof(xs[0]));
 
     RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
     StringReference *errorMessage = CreateStringReference(L"", 0);
-    success = DrawScatterPlot(canvasReference, 600, 400, xs, 5, ys, 5, errorMessage);
+    success = DrawScatterPlot(canvasReference, 1200, 800, xs, size, ys, size, errorMessage);
 
     if (success)
     {
